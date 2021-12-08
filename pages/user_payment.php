@@ -117,7 +117,7 @@ $cart_table = mysqli_query($dbconn,"SELECT sum(total) FROM order_details WHERE u
            echo 'Shipping Address: '.$ship_add.' *********';
 
 $query = "INSERT INTO order (user_id, track_num, firstname, middlename, lastname, email, contact, shipping_add, order_date, status, totalprice, tax) 
-        VALUES ('$user_id','$track_num','$firstname','$middlename','$lastname','$email','$contact','$ship_add','$date','Pending',,'$total','$tax')";  
+        VALUES ('$user_id','$track_num','$firstname','$middlename','$lastname','$email','$contact','$ship_add','$date','Pending','$total','$tax')";
         $result = mysqli_query($dbconn,$query);
 
  mysqli_query($dbconn,"UPDATE order_details SET order_id=order_id+1 WHERE user_id='$user_id' AND order_id=''")or die(mysqli_error());

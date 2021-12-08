@@ -60,7 +60,8 @@
                                  include('../config/dbconn.php');
                                  $query=mysqli_query($dbconn,"SELECT * FROM `users` WHERE user_id='".$_SESSION['id']."'");
                                  $row=mysqli_fetch_array($query);
-                                 echo ''.$row['firstname'].'';
+                                //  echo ''.$row['firstname'].'';
+                                 echo htmlspecialchars($row['firstname']);
                                 ?>
                             </p>
                         </a>
