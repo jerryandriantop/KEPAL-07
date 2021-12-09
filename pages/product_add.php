@@ -119,11 +119,9 @@ if(isset($_POST['submit'])){
 
         $query = "INSERT INTO products (prod_name, prod_desc, prod_qty, prod_cost, prod_price, category, supplier, prod_serial, prod_pic1, prod_pic2, prod_pic3) 
         VALUES ('$prod_name','$prod_desc','$prod_qty','$prod_cost','$prod_price','$category','$supplier','$prod_serial','$prod_pic1','$prod_pic2','$prod_pic3')";  
-
-        $result = mysqli_query($dbconn,$query);
-            
-        if($result){
-            
+        $result = mysqli_query($dbconn,$query) or die(mysqli_error($dbconn));
+        
+        if($result){  
             $prod_name = $_POST['prod_name'];
             $prod_qty = $_POST['prod_qty'];
             
@@ -142,6 +140,8 @@ if(isset($_POST['submit'])){
 
         //redirecting to the display page.
         header("Location: admin_panel.php");
+        } else {
+            die($result);
         }
         
     }

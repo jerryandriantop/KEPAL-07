@@ -19,7 +19,7 @@
 
         // $query = mysqli_query($dbconn,"SELECT * FROM `users` WHERE username='$user'");
 
-        $query=mysqli_query($dbconn,"SELECT * FROM `users` WHERE username='$user' AND password='$salted_password'");
+        $query=mysqli_query($dbconn,"SELECT * FROM `users` WHERE username='$user' AND password='$salted_password'"); // 
         $res=mysqli_fetch_array($query);
         $id=$res['user_id'];
 

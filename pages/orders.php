@@ -60,7 +60,7 @@
                                       if($action=='deleted'){
                                           echo "<div class='alert alert-success'>Record was deleted.</div>";
                                       }
-                                      $query = "SELECT * FROM order ORDER BY order_date ASC";
+                                      $query = "SELECT * FROM `order` ORDER BY order_date ASC";
                                       $result = mysqli_query($dbconn,$query);
                                       ?>  
                                  
@@ -77,6 +77,7 @@
                                       <th>Total price(Php)</th>
                                       <th>Tax(Php)</th>
                                       <th>Status</th>
+                                      <th>Action</th>
                                     </tr>
                                         <?php
                                           if($result){
@@ -91,22 +92,21 @@
                                                 echo "<td>".$res['totalprice']."</td>"; 
                                                 echo "<td>".$res['tax']."</td>";
                                                 echo "<td>".$res['status']."</td>";
+
+                                                if(!($res['status'] == 'Accept')){
+                                        ?>
+                                        <td>
+                                            <form action="transaction_dsa.php" method="POST">
+                                                <input type="hidden" name="order_id" value="<?= $res['order_id'] ?>">
+                                                <button class="btn btn-primary" type="submit">Accept</button>
+                                            </form>
+                                        </td>
+                                        <?php
+                                                }
                                               echo "</tr>"; 
                                             }
                                           }?>
                                 </table><br><br><br><br>
-
-
-
-
-
-
-
-
-
-
-
-
                         </div>
                     </div> 
                 </div>

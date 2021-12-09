@@ -122,6 +122,14 @@ if(isset($_POST['submit']))
         }    
     } else {    
         //updating the table
+        // $firstname = htmlspecialchars($firstname);
+        // $middlename = htmlspecialchars($middlename);
+        // $lastname = htmlspecialchars($lastname);
+        // $address = htmlspecialchars($address);
+        // $email = htmlspecialchars($email);
+        // $contact = htmlspecialchars($contact);
+        // $username = htmlspecialchars($username);
+        // $password = htmlspecialchars($password);
         $query = "INSERT INTO users (firstname, middlename, lastname, address, email, contact, username, password) 
                 VALUES ('$firstname','$middlename','$lastname','$address','$email','$contact','$username','$pass1')";
 

@@ -15,14 +15,14 @@ if(isset($_POST['submit']))
 {   
     $prod_id = mysqli_real_escape_string($dbconn, $_POST['prod_id']);
 
-    $prod_name=$_POST['prod_name'];
-    $prod_desc=$_POST['prod_desc'];
+    // $prod_name=$_POST['prod_name'];
+    // $prod_desc=$_POST['prod_desc'];
     $prod_qty=$_POST['prod_qty'];
-    $prod_cost=$_POST['prod_cost'];
-    $prod_price=$_POST['prod_price'];
-    $category=$_POST['category'];
-    $supplier=$_POST['supplier'];
-    $prod_serial=$_POST['prod_serial'];
+    // $prod_cost=$_POST['prod_cost'];
+    // $prod_price=$_POST['prod_price'];
+    // $category=$_POST['category'];
+    // $supplier=$_POST['supplier'];
+    // $prod_serial=$_POST['prod_serial'];
     // checking empty field
    
         if(empty($prod_qty)) {
@@ -32,7 +32,7 @@ if(isset($_POST['submit']))
 
         //updating the table
         $query = "UPDATE products SET prod_qty=prod_qty+'$prod_qty' WHERE prod_id=$prod_id";
-
+            die($query);
         $result = mysqli_query($dbconn,$query);
        
        if($result){

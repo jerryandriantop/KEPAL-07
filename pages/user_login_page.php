@@ -1,10 +1,13 @@
 <?php
-    session_start();
-    include('../config/dbconn.php');
-    
-    if (isset($_SESSION['id'])){
-        header('Location:user_index.php');
-    }
+
+session_start();
+include('../config/dbconn.php');
+
+if (isset($_SESSION['id'])) {
+    header('Location:user_index.php');
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -106,13 +109,13 @@
                     <br>
                     <?php
 
-                                    if (
-                                        isset($_SESSION['msg'])){
-                                        echo $_SESSION['msg'];
-                                        unset($_SESSION['msg']);
-
-                                    }
-                                    ?>
+                    if (
+                        isset($_SESSION['msg'])
+                    ) {
+                        echo $_SESSION['msg'];
+                        unset($_SESSION['msg']);
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -120,9 +123,10 @@
             <div class="container">
                 <div class="copyright">
                     <a href="admin_login_page.php">&copy;
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>,</a> Designed and Coded by Serve(8) Web Solutions, Inc.
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>,
+                    </a> Designed and Coded by Serve(8) Web Solutions, Inc.
                 </div>
             </div>
         </footer>

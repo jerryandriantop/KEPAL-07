@@ -6,15 +6,9 @@
     header('location: admin_login_page.php');
     exit();
   }
-?>
-
-<?php
 
 $user_id = $_SESSION['id'];
 $order_id=$_GET['order_id'];
-
-$result = mysqli_query($dbconn, "DELETE FROM order_details WHERE order_details_id=$order_id");
+$result = mysqli_query($dbconn, "DELETE FROM order_details WHERE order_details_id = $order_id");
 
 header('location: user_cart.php');
-?>
-

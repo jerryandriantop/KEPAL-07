@@ -84,6 +84,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="user_transaction.php">
+                            <i class="now-ui-icons shopping_cart-simple"></i>
+                            <p>Shopping Transaction</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="logout.php" class="nav-link" href="" onclick="scrollToDownload()">
                             <i class="now-ui-icons ui-1_lock-circle-open"></i>
                             <p>Logout</p>

@@ -1,11 +1,16 @@
 <?php
-    session_start();
-    include('../config/dbconn.php');
+require '../vendor/autoload.php';
+require('../app/DSA_Transaction.php');
 
-    if (!isset($_SESSION['id']) ||(trim ($_SESSION['id']) == '')) {
-        header('location:user_login_page.php');
-        exit();
-    }
+use Tools\DSA_Transaction;
+
+session_start();
+include('../config/dbconn.php');
+
+if (!isset($_SESSION['id']) || (trim($_SESSION['id']) == '')) {
+    header('location:user_login_page.php');
+    exit();
+}
 ?>
 
 
@@ -32,124 +37,127 @@
     <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
 
     <style type="text/css">
-      tr td{
-        padding-top:-10px!important;
-        border: 1px solid #000;
-      }
-      @media print {
-          .btn-print {
-            display:none !important;
-          }
-      }
+        tr td {
+            padding-top: -10px !important;
+            border: 1px solid #000;
+        }
+
+        @media print {
+            .btn-print {
+                display: none !important;
+            }
+        }
     </style>
 
 
 </head>
+
 <body class="index-page sidebar-collapse">
     <div class="wrapper"><br>
         <div class="main">
             <div class="section section-basic">
                 <div class="container">
-                      <h2>       <?php
-                                 include('../config/dbconn.php');
-                                 $query=mysqli_query($dbconn,"SELECT * FROM `users` WHERE user_id='".$_SESSION['id']."'");
-                                 $row=mysqli_fetch_array($query);
-                                 $cid=$row['user_id'];
-                                 echo $row['firstname'];
-                                ?>'s Checking Out!
-                      </h2>
-                      <hr color="orange"> 
-                
-                <div class="col-md-12">
-                <br>
-            
-                <div class="panel panel-success panel-size-custom">
-                        <div class="panel-body">  
+                    <h2> <?php
+                            include('../config/dbconn.php');
+                            $query = mysqli_query($dbconn, "SELECT * FROM `users` WHERE user_id='" . $_SESSION['id'] . "'");
+                            $row = mysqli_fetch_array($query);
+                            $cid = $row['user_id'];
+                            echo $row['firstname'];
+                            ?>'s Checking Out!
+                    </h2>
+                    <hr color="orange">
+
+                    <div class="col-md-12">
+                        <br>
+
+                        <div class="panel panel-success panel-size-custom">
+                            <div class="panel-body">
 
 
 
-    <center>
-	
-    <?php
-    $user_id = $_SESSION['id'];
+                                <center>
 
-	include('../config/dbconn.php');
-    $query=mysqli_query($dbconn,"SELECT * FROM `users` WHERE user_id='".$_SESSION['id']."'");
-    $row=mysqli_fetch_array($query);
-    $firstname=$row['firstname'];
-    $middlename=$row['middlename'];
-    $lastname=$row['lastname'];
-    $email=$row['email'];
-    $contact=$row['contact'];
+                                    <?php
+                                    $user_id = $_SESSION['id'];
 
-
-                        
-$query = mysqli_query($dbconn,"SELECT * FROM order_details WHERE user_id='$user_id' AND order_id=''") or die (mysqli_error());
-$row3 = mysqli_fetch_array($query);
-$count = mysqli_num_rows($query);
-$prod_id=$row3['prod_id'];
-$qty= $row3['prod_qty'];
-
-$query2=mysqli_query($dbconn,"SELECT * FROM products WHERE prod_id='$prod_id'") or die (mysqli_error());
-$row2=mysqli_fetch_array($query2);
-$prod_qty=$row2['prod_qty'];
+                                    include('../config/dbconn.php');
+                                    $query = mysqli_query($dbconn, "SELECT * FROM `users` WHERE user_id='" . $_SESSION['id'] . "'");
+                                    $row = mysqli_fetch_array($query);
+                                    $firstname = $row['firstname'];
+                                    $middlename = $row['middlename'];
+                                    $lastname = $row['lastname'];
+                                    $email = $row['email'];
+                                    $contact = $row['contact'];
 
 
- mysqli_query($dbconn,"UPDATE products SET prod_qty = prod_qty - $qty WHERE prod_id ='$prod_id' AND prod_qty='$prod_qty'");
-       
 
-$cart_table = mysqli_query($dbconn,"SELECT sum(total) FROM order_details WHERE user_id='$user_id' AND order_id=''") or die(mysqli_error());
-       $cart_count = mysqli_num_rows($cart_table);
-       
-        while ($cart_row = mysqli_fetch_array($cart_table)) {
+                                    $query = mysqli_query($dbconn, "SELECT * FROM order_details WHERE user_id='$user_id' AND order_id=''") or die(mysqli_error());
+                                    $row3 = mysqli_fetch_array($query);
+                                    $count = mysqli_num_rows($query);
+                                    $prod_id = $row3['prod_id'];
+                                    $qty = $row3['prod_qty'];
 
-           $total = $cart_row['sum(total)'];
-           date_default_timezone_set('Asia/Manila');
-           $date = date("Y-m-d H:i:s");
-           $tax=$total * 0.12;
-           $track_num= $user_id.$user_id+1000;
-           $shipaddress=$_POST['shipaddress'];
-           $city=$_POST['city'];
-           $ship_add=$shipaddress .' '. $city;    
-           echo '********* Your tracking number: '.$track_num.' | ';  
-           echo 'Total: Php'.$total.' | ';
-           echo 'Tax: Php'.$tax.' | '; 
-           echo 'Shipping Address: '.$ship_add.' *********';
-
-$query = "INSERT INTO order (user_id, track_num, firstname, middlename, lastname, email, contact, shipping_add, order_date, status, totalprice, tax) 
-        VALUES ('$user_id','$track_num','$firstname','$middlename','$lastname','$email','$contact','$ship_add','$date','Pending',,'$total','$tax')";  
-        $result = mysqli_query($dbconn,$query);
-
- mysqli_query($dbconn,"UPDATE order_details SET order_id=order_id+1 WHERE user_id='$user_id' AND order_id=''")or die(mysqli_error());
-mysqli_query ($dbconn,"UPDATE order_details SET total_qty =$prod_qty - $qty WHERE prod_id ='$prod_id' AND total_qty='' ");           
+                                    $query2 = mysqli_query($dbconn, "SELECT * FROM products WHERE prod_id='$prod_id'") or die(mysqli_error());
+                                    $row2 = mysqli_fetch_array($query2);
+                                    $prod_qty = $row2['prod_qty'];
 
 
-}
+                                    mysqli_query($dbconn, "UPDATE products SET prod_qty = prod_qty - $qty WHERE prod_id ='$prod_id' AND prod_qty='$prod_qty'");
 
-?>
-        
-        <hr color="orange"> 
-        <br><br>
-        <h3>Payment type will be a <b>Cash On Delivery</b></h3>
-        <h3>Delivery process time, minimum of three(3) days and maximum of five(5) working days.</h3><br>
-        <h5>Electricks Technology, Inc.</h5>
-        
-     <button type="button" class="btn btn-warning btn-round" onclick = "window.print()"><span class="now-ui-icons ui-1_check"></span> Print</button> 
-     <a href="user_index.php"><button type="button" class="btn btn-success btn-round"><span class="now-ui-icons ui-1_check"></span> Back to Homepage</button></a>
-    
-    </center>
 
-</div>
+                                    $cart_table = mysqli_query($dbconn, "SELECT sum(total) FROM order_details WHERE user_id='$user_id' AND order_id=''") or die(mysqli_error());
+                                    $cart_count = mysqli_num_rows($cart_table);
+
+                                    while ($cart_row = mysqli_fetch_array($cart_table)) {
+
+                                        $total = $cart_row['sum(total)'];
+                                        date_default_timezone_set('Asia/Manila');
+                                        $date = date("Y-m-d H:i:s");
+                                        $tax = $total * 0.12;
+                                        $track_num = $user_id . $user_id + 1000;
+                                        $shipaddress = $_POST['shipaddress'];
+                                        $city = $_POST['city'];
+                                        $no_rek = $_POST['no_rek'];
+                                        $ship_add = $shipaddress . ' ' . $city;
+                                        echo '********* Your tracking number: ' . $track_num . ' | ';
+                                        echo 'Total: Php' . $total . ' | ';
+                                        echo 'Tax: Php' . $tax . ' | ';
+                                        echo 'Shipping Address: ' . $ship_add . ' *********';
+                                        $dsa_transaction = new DSA_Transaction($no_rek);
+                                        $result_dsa = $dsa_transaction->makeDSA();
+                                        $query = "INSERT INTO `order` (user_id, track_num, firstname, middlename, lastname, email, contact, shipping_add, order_date, status, totalprice, tax, cipher, encrypt_ky, signaiv, private_key, public_key) 
+        VALUES ('$user_id','$track_num','$firstname','$middlename','$lastname','$email','$contact','$ship_add','$date','Pending','$total','$tax', '" . $result_dsa['msg_crpt'] . "', '" . $result_dsa['encrypt_ky'] . "', '" . $result_dsa['sgivnat'] . "', '" . $result_dsa['prvt_ky'] . "', '" . $result_dsa['pblc_ky'] . "')";
+                                        $result = mysqli_query($dbconn, $query);
+                                        
+                                        
+                                        mysqli_query($dbconn, "UPDATE order_details SET order_id=order_id+1 WHERE user_id='$user_id' AND order_id=''") or die(mysqli_error());
+                                        mysqli_query($dbconn, "UPDATE order_details SET total_qty =$prod_qty - $qty WHERE prod_id ='$prod_id' AND total_qty='' ");
+                                    }
+
+                                    ?>
+
+                                    <hr color="orange">
+                                    <br><br>
+                                    <h3>Payment type will be a <b>Cash On Delivery</b></h3>
+                                    <h3>Delivery process time, minimum of three(3) days and maximum of five(5) working days.</h3><br>
+                                    <h5>Electricks Technology, Inc.</h5>
+
+                                    <button type="button" class="btn btn-warning btn-round" onclick="window.print()"><span class="now-ui-icons ui-1_check"></span> Print</button>
+                                    <a href="user_index.php"><button type="button" class="btn btn-success btn-round"><span class="now-ui-icons ui-1_check"></span> Back to Homepage</button></a>
+
+                                </center>
+
+                            </div>
 
 
 
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
-<br><br><br><br>
-<footer class="footer" data-background-color="black">
+        <br><br><br><br>
+        <footer class="footer" data-background-color="black">
             <div class="container">
                 <nav>
                     <ul>
@@ -202,23 +210,22 @@ mysqli_query ($dbconn,"UPDATE order_details SET total_qty =$prod_qty - $qty WHER
 </script>
 
 
-   <!---  inserted  -->
-    <!-- SlimScroll -->
-    <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="../plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../plugins/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../plugins/demo.js"></script>
-    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <script>
-      $(function () {
-        $("#example1").DataTable({
-        });
-      });
-    </script>
-     <!--  inserted  -->
+<!---  inserted  -->
+<!-- SlimScroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../plugins/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../plugins/demo.js"></script>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+    $(function() {
+        $("#example1").DataTable({});
+    });
+</script>
+<!--  inserted  -->
 
 </html>
