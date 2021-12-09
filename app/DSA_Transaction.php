@@ -2,7 +2,6 @@
 
 namespace Tools;
 
-use mysqli;
 use phpseclib3\Crypt\DSA;
 use phpseclib3\Crypt\PublicKeyLoader;
 
